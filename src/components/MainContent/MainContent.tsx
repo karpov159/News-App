@@ -1,9 +1,9 @@
+import { fetchNews } from '../../core/store/NewsSlice';
+import { useAppDispatch } from '../../core/store';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import NewsCard from '../../components/NewsCard/NewsCard';
-import { useAppDispatch } from '../../core/store';
-import { fetchNews } from '../../core/store/NewsSlice';
 
 const MainContent = ({ allNews }: { allNews: number[] }) => {
 	const dispatch = useAppDispatch();

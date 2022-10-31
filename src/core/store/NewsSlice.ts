@@ -3,6 +3,7 @@ import {
 	createEntityAdapter,
 	createAsyncThunk,
 	EntityState,
+	PayloadAction,
 } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import httpRequest from '../../services/httpRequest';
@@ -53,10 +54,13 @@ const newsSlice = createSlice({
 			.addCase(fetchNews.pending, (state) => {
 				state.newsLoadingStatus = 'loading';
 			})
-			.addCase(fetchNews.fulfilled, (state, action) => {
-				newsAdapter.setAll(state, action.payload);
-				state.newsLoadingStatus = 'idle';
-			})
+			.addCase(
+				fetchNews.fulfilled,
+				(state, action: PayloadAction<number[]>) => {
+					newsAdapter.setAll(state, action.payload);
+					state.newsLoadingStatus = 'idle';
+				}
+			)
 			.addCase(fetchNews.rejected, (state) => {
 				state.newsLoadingStatus = 'error';
 			})

@@ -1,25 +1,16 @@
-import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 import { useAppDispatch } from '../../core/store';
 import { fetchItem } from '../../core/store/NewsSlice';
 import CommentData from '../../shared/interfaces/CommentData';
+import Box from '@mui/material/Box';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
 import Button from '@mui/material/Button';
 
-const Comment = ({
-	id,
-	children,
-	padding,
-}: {
-	id: number;
-	children: boolean;
-	padding: number;
-}) => {
+const Comment = ({ id, padding }: { id: number; padding: number }) => {
 	const [commentData, setCommentData] = useState<CommentData>();
 	const [isChildrenShowed, setShowChildren] = useState<boolean>(false);
-	// const [padding, setPadding] = useState<number>(0);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -27,6 +18,7 @@ const Comment = ({
 	}, [dispatch, id]);
 
 	const calcTime = commentData?.time ? moment.unix(commentData?.time) : null;
+
 	const convertedTime = calcTime
 		? moment(calcTime, 'YYYYMMDD').fromNow()
 		: null;
@@ -39,14 +31,7 @@ const Comment = ({
 
 	const renderChildrenComments = (comments: number[]) => {
 		return comments.map((comment) => {
-			return (
-				<Comment
-					key={comment}
-					id={comment}
-					children={true}
-					padding={padding + 2}
-				/>
-			);
+			return <Comment key={comment} id={comment} padding={padding + 2} />;
 		});
 	};
 
@@ -78,7 +63,8 @@ const Comment = ({
 			dangerouslySetInnerHTML={renderText()}
 			sx={{ mt: 1 }}
 			component='div'
-			variant='body1'></Typography>
+			variant='body1'
+		/>
 	) : null;
 
 	return (
@@ -95,6 +81,7 @@ const Comment = ({
 					cursor: 'default',
 				}}>
 				<AccountCircleIcon sx={{ height: '50px' }} fontSize='large' />
+
 				<Box
 					sx={{
 						ml: 2,
@@ -117,11 +104,15 @@ const Comment = ({
 							{convertedTime}
 						</Typography>
 					</Box>
+
 					{text}
+
 					{hideCommentsButton}
+
 					{openCommentsButton}
 				</Box>
 			</Box>
+
 			{isChildrenShowed ? childrenComments : null}
 		</>
 	);

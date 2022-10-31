@@ -28,6 +28,7 @@ const NewsPage = () => {
 	}, [dispatch]);
 
 	const spinner = newsLoadingStatus === 'loading' ? <Spinner /> : null;
+
 	const content =
 		newsLoadingStatus === 'idle' ? (
 			<MainContent allNews={allNews.splice(0, newsToShow)} />
@@ -36,6 +37,7 @@ const NewsPage = () => {
 	return (
 		<>
 			{spinner}
+
 			{content}
 		</>
 	);

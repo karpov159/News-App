@@ -25,18 +25,12 @@ const NewsContent = ({
 
 	const renderComments = (comments: number[]) => {
 		return comments.map((comment) => {
-			return (
-				<Comment
-					key={comment}
-					id={comment}
-					children={false}
-					padding={0}
-				/>
-			);
+			return <Comment key={comment} id={comment} padding={0} />;
 		});
 	};
 
 	const numOfComments = kids ? kids.length : 0;
+
 	const comments = kids ? renderComments(kids) : null;
 
 	return (
@@ -79,6 +73,7 @@ const NewsContent = ({
 					<Typography variant='body1'>
 						Comments {numOfComments}
 					</Typography>
+
 					<Button
 						onClick={onReload}
 						variant='text'
