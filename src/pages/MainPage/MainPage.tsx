@@ -4,6 +4,7 @@ import { selectAll } from '../../core/store/NewsSlice';
 import { fetchNews } from '../../core/store/NewsSlice';
 import Spinner from '../../components/Spinner/Spinner';
 import MainContent from '../../components/MainContent/MainContent';
+import Header from '../../components/Header/Header';
 
 const NewsPage = () => {
 	const dispatch = useAppDispatch();
@@ -36,6 +37,8 @@ const NewsPage = () => {
 
 	return (
 		<>
+			<Header isRefreshButton={true} />
+
 			{spinner}
 
 			{content}

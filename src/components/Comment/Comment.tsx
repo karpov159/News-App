@@ -14,7 +14,9 @@ const Comment = ({ id, padding }: { id: number; padding: number }) => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(fetchItem(id)).unwrap().then(setCommentData);
+		dispatch(fetchItem(id))
+			.unwrap()
+			.then((res) => setCommentData(res));
 	}, [dispatch, id]);
 
 	const calcTime = commentData?.time ? moment.unix(commentData?.time) : null;
@@ -67,7 +69,7 @@ const Comment = ({ id, padding }: { id: number; padding: number }) => {
 		/>
 	) : null;
 
-	return (
+	return commentData ? (
 		<>
 			<Box
 				sx={{
@@ -115,7 +117,7 @@ const Comment = ({ id, padding }: { id: number; padding: number }) => {
 
 			{isChildrenShowed ? childrenComments : null}
 		</>
-	);
+	) : null;
 };
 
 export default Comment;

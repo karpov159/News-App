@@ -15,7 +15,9 @@ const NewsCard = ({ id }: { id: number }) => {
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
-		dispatch(fetchItem(id)).unwrap().then(setNewsData);
+		dispatch(fetchItem(id))
+			.unwrap()
+			.then((res) => setNewsData(res));
 	}, [dispatch, id]);
 
 	const points =
@@ -23,12 +25,19 @@ const NewsCard = ({ id }: { id: number }) => {
 			? newsData.score + ' point'
 			: newsData?.score + ' points';
 
+	const comments = newsData?.kids
+		? newsData.kids.length === 1
+			? '1 comment'
+			: newsData.kids.length + ' comments'
+		: '0 comments';
+
 	const time = newsData?.time ? moment.unix(newsData.time) : null;
 	const convertedTime = moment(time, 'YYYYMMDD').fromNow();
 
-	return (
+	return newsData ? (
 		<Grid item xs={12} md={12}>
 			<Card
+				elevation={3}
 				sx={{
 					minWidth: '100%',
 					minHeight: '100px',
@@ -45,7 +54,11 @@ const NewsCard = ({ id }: { id: number }) => {
 						variant='h6'
 						component='div'>
 						<NavLink
-							style={{ textDecoration: 'none', color: '#000' }}
+							target='_blank'
+							style={{
+								textDecoration: 'none',
+								color: '#000',
+							}}
 							to={`${id}`}>
 							{newsData?.title}
 						</NavLink>
@@ -66,10 +79,14 @@ const NewsCard = ({ id }: { id: number }) => {
 							{'by ' + newsData?.by}
 						</Typography>
 					</Box>
+
+					<Typography sx={{ mt: 2 }} variant='body2'>
+						{comments}
+					</Typography>
 				</CardContent>
 			</Card>
 		</Grid>
-	);
+	) : null;
 };
 
 export default NewsCard;

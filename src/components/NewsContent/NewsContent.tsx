@@ -35,10 +35,12 @@ const NewsContent = ({
 
 	return (
 		<Card
+			elevation={3}
 			sx={{
-				width: '800px',
+				width: '100%',
 				minHeight: '200px',
 				mt: 2,
+				mb: 2,
 			}}>
 			<CardContent
 				sx={{

@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet';
 import NewsCardData from '../../shared/interfaces/NewsCardData';
 import Spinner from '../../components/Spinner/Spinner';
 import NewsContent from '../../components/NewsContent/NewsContent';
+import Header from '../../components/Header/Header';
 
 const NewsPage = () => {
 	const [newsData, setNewsData] = useState<NewsCardData>();
@@ -44,6 +45,8 @@ const NewsPage = () => {
 			<Helmet>
 				<title>{newsData?.title}</title>
 			</Helmet>
+
+			<Header isRefreshButton={false} />
 
 			{content}
 		</>
