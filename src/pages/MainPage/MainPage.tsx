@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 import { store, useAppDispatch, useAppSelector } from '../../core/store';
 import { selectAll } from '../../core/store/NewsSlice';
 import { fetchNews } from '../../core/store/NewsSlice';
@@ -12,16 +13,29 @@ const NewsPage = () => {
 	const newsLoadingStatus = useAppSelector(
 		(state) => state.news.newsLoadingStatus
 	);
-	const newsToShow = 10;
+
+	const { ref, inView } = useInView();
+
+	const [currentPage, setCurrentPage] = useState<number>(0);
+
+	const newsToShow: number = 10;
+
+	useEffect(() => {
+		if (inView) {
+			setCurrentPage((currentPage) => currentPage + 1);
+		}
+	}, [inView]);
 
 	useEffect(() => {
 		dispatch(fetchNews());
 	}, [dispatch]);
 
+	console.log(currentPage);
+
 	useEffect(() => {
 		const refreshPage = setInterval(() => {
 			dispatch(fetchNews());
-		}, 6000000);
+		}, 60000);
 
 		return () => {
 			clearInterval(refreshPage);
@@ -32,7 +46,7 @@ const NewsPage = () => {
 
 	const content =
 		newsLoadingStatus === 'idle' ? (
-			<MainContent allNews={allNews.splice(0, newsToShow)} />
+			<MainContent allNews={allNews.slice(0, newsToShow * currentPage)} />
 		) : null;
 
 	return (
@@ -42,6 +56,13 @@ const NewsPage = () => {
 			{spinner}
 
 			{content}
+
+			<div
+				style={{
+					height: '20px',
+					width: '100%',
+				}}
+				ref={ref}></div>
 		</>
 	);
 };

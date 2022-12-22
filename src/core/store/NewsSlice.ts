@@ -7,11 +7,9 @@ import {
 } from '@reduxjs/toolkit';
 import { RootState } from '.';
 import httpRequest from '../../services/httpRequest';
-import NewsCardData from '../../shared/interfaces/NewsCardData';
 
 interface NewsSliceState {
 	newsLoadingStatus: string;
-	NewsPageData: NewsCardData | null;
 }
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -23,7 +21,6 @@ const newsAdapter = createEntityAdapter({
 const initialState: EntityState<number> & NewsSliceState =
 	newsAdapter.getInitialState({
 		newsLoadingStatus: 'idle',
-		NewsPageData: null,
 	});
 
 export const fetchNews = createAsyncThunk('news/fetchNews', async () => {
