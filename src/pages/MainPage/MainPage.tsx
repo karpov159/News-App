@@ -12,7 +12,7 @@ const NewsPage = () => {
 	const newsLoadingStatus = useAppSelector(
 		(state) => state.news.newsLoadingStatus
 	);
-	const newsToShow = 100;
+	const newsToShow = 10;
 
 	useEffect(() => {
 		dispatch(fetchNews());
@@ -21,7 +21,7 @@ const NewsPage = () => {
 	useEffect(() => {
 		const refreshPage = setInterval(() => {
 			dispatch(fetchNews());
-		}, 60000);
+		}, 6000000);
 
 		return () => {
 			clearInterval(refreshPage);
